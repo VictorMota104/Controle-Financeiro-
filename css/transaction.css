@@ -59,6 +59,12 @@
 /*tablet portrait 768px*/
 
 @media screen and (max-width: 768px) {
+  .line {
+    display: none;
+  }
+  .main .transaction h1 {
+    margin-bottom: -2px;
+  }
   .main .transaction {
     margin: 0 auto;
     margin-top: 20px;
@@ -96,10 +102,17 @@
 /*smartphone 557px*/
 
 @media screen and (max-width: 557px) {
+  .main .transaction h1 {
+    display: none;
+  }
+  .line {
+    display: block;
+  }
   .main .transaction {
     width: 95%;
     height: 344px;
     border: none;
+    margin-bottom: -30px;
   }
   .transaction-general {
     display: block;

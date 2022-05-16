@@ -126,62 +126,11 @@ body {
   .main {
     display: block;
   }
-}
 
-/*@media screen and (max-width: 500px) {
-  .header .menu-mobile {
-    display: none;
-    width: 80%;
-  }
-
-  .main .transaction h1 {
-    display: none;
-  }
-
-  .main .transaction {
-    border: none;
-    width: 90%;
-    height: 290px;
-  }
-
-  .main .transaction .itens {
-    margin: 0;
-    flex-direction: column;
-  }
-
-  .main .transaction .itens input {
-    margin: 0;
-    width: 95%;
-    padding: 12px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-
-  .main .transaction .itens .item_1 {
-    white-space: nowrap;
-    margin: 0;
-  }
-
-  .main .transaction .itens .item_2 {
-    width: auto;
-    white-space: nowrap;
-  }
-
-  .main .transaction .itens .item_3 {
-    white-space: nowrap;
-    margin: 0;
-  }
-
-  .botao {
+  .line {
     margin: 0 auto;
-    width: 97%;
-    padding: 8px;
-  }
-
-  .main .transaction .line {
-    border: 1px solid #979797;
-    margin-top: 25px;
-    width: 100%;
+    width: 95%;
+    height: 5px;
+    border-top: 2px solid #979797;
   }
 }
-*/
