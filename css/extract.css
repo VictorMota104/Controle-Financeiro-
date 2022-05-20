@@ -15,6 +15,7 @@
   font-size: 14px;
   color: #000000;
   border-bottom: 1px solid #979797;
+  margin-bottom: -18px;
 }
 .main .extract .subtitle p {
   margin-bottom: 5px;
@@ -26,23 +27,16 @@
   margin-right: 5px;
 }
 
-.main .extract-itens {
-  list-style: none;
-  display: flex;
-  font-size: 14px;
-  margin-top: 0;
-  border-bottom: 1px solid #979797;
-}
+/*extract*/
 .minus,
 .plus {
   font-size: 14px;
   display: flex;
-  border-top: 1px solid #979797;
   margin-left: -40px;
+  border-bottom: 1px solid #979797;
 }
 .main .extract .operador {
   margin-right: 11px;
-  margin-left: -40px;
 }
 .main .extract .conteudo {
   width: 100%;

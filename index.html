@@ -34,7 +34,7 @@
       </header>
       <main class="main">
 
-        <form class="transaction" id="formulario_1" action="./index.html" onsubmit="validacao(event); return false">
+        <form class="transaction" id="formulario_1" action="./index.html">
         <h1>Nova transação</h1>
             <div class="transaction-general">
                 <div class="transaction-itens1">
@@ -57,7 +57,7 @@
                     <div class="form-control">
                         <label for="amount">
                         </label>
-                        <input class="input-valor" type="text" name="valor" id="valor" placeholder="R$ 0,00" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                        <input class="input-valor" type="text" name="valor" id="valor" placeholder="R$ 0,00"> <!--onKeyPress="return(MascaraMoeda(this,'.',',',event))"-->
                     </div>
                 </div>
             </div>
@@ -75,13 +75,11 @@
                   <p>Valor</p>
               </div>
               <ul id="extract-itens" class="extract-itens">
-                  <p class="operador">+</p>
-                  <p class="conteudo">Lorem ipsum dolor sit amet consectetur.</p>
-                  <p class="valor">R$500,00</p>
+
               </ul>
               <div class="total">
                   <p>Total</p>
-                  <p class="value-total">R$500,00</p>
+                  <p  class="value-total">R$500,00</p>
               </div>
           </section>
       </main>

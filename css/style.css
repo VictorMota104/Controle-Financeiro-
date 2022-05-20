@@ -50,6 +50,7 @@ body {
 .header li {
   margin: 5px;
   padding: 0 5px;
+  cursor: pointer;
 }
 
 .header li:nth-child(3) {

@@ -1,4 +1,4 @@
-function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e) {
+/*function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e) {
   var sep = 0;
   var key = "";
   var i = (j = 0);
@@ -41,29 +41,97 @@ function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e) {
     objTextBox.value += SeparadorDecimal + aux.substr(len - 2, len);
   }
   return false;
+}*/
+
+const extractUl = document.querySelector(".extract-itens");
+const extractTotal = document.querySelector(".value-total");
+const form = document.querySelector("#formulario_1");
+const inputSelect = document.querySelector(".input-select");
+const inputMercadoria = document.querySelector(".input-mercadoria");
+const inputValor = document.querySelector(".input-valor");
+const clean = document.querySelector(".clean");
+
+var localStorageTransactions = JSON.parse(localStorage.getItem("transactions"));
+let transactions =
+  localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
+
+clean.addEventListener("click", function cleanner() {
+  let confirma = confirm("Todos as transações serão removidas!");
+  if (confirma == true) {
+    transactions = [];
+    alert("Transações excluídas!");
+  } else {
+    alert("Operação cancelada!");
+  }
+  updateLocalStorage();
+  desenhaTabela();
+});
+
+const addTransactionsIntoDOM = (transactions) => {
+  const operador = transactions.amount < 0 ? "-" : "+";
+  const CSSClass = transactions.amount < 0 ? "minus" : "plus";
+  const li = document.createElement("li");
+
+  li.classList.add(CSSClass);
+  li.innerHTML = `
+  <p class="operador">${operador}</p>
+  <p class="conteudo">${transactions.name}</p>
+  <p class="valor">${transactions.amount}</p>
+    `;
+  extractUl.append(li);
+};
+function valorTotal() {
+  const transactionsAmounts = transactions.map(
+    (transaction) => transaction.amount
+  );
+
+  const total = transactionsAmounts.reduce(
+    (accumulator, transaction) => accumulator + transaction,
+    0
+  );
+
+  extractTotal.textContent = `R$ ${total}`;
 }
 
-function validacao(event) {
+function desenhaTabela() {
+  extractUl.innerHTML = "";
+  transactions.forEach(addTransactionsIntoDOM);
+  valorTotal();
+}
+desenhaTabela();
+
+const updateLocalStorage = () => {
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+};
+
+form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  var selecao = document.querySelector(".input-select").value;
-  var mercadoriaFormulario = document.querySelector(".input-mercadoria").value;
-  var valorFormulario = document.querySelector(".input-valor").value;
+  const transactionName = inputMercadoria.value.trim();
+  const transactionAmount = inputValor.value.trim();
 
-  if (selecao == "input-select") {
-    alert("Selecione o tipo de transação!");
+  if (transactionName === "") {
+    alert("Por favor preencha o nome da transação!");
+    return false;
+  }
+  if (transactionAmount === "") {
+    alert("Por favor preencha o valor da transação!");
     return false;
   }
 
-  if (mercadoriaFormulario == "") {
-    alert("Preencha o nome da mercadoria!");
-    document.querySelector(".input-mercadoria").focus();
-    return false;
-  }
+  const transaction = {
+    name: transactionName,
+    amount: Number(transactionAmount),
+  };
 
-  if (valorFormulario == "") {
-    alert("Preencha o valor!");
-    document.querySelector(".input-valor").focus();
-    return false;
-  }
-}
+  transactions.push(transaction);
+  desenhaTabela();
+  updateLocalStorage();
+  console.log(transactions.amount);
+
+  inputMercadoria.value = "";
+  inputValor.value = "";
+});
+
+//Não consegui realizar a soma do valor total com a mascara de moeda :(
+//Não consegui realizar as ações a partir do input compra/venda... Para que o valor se torne positivo ou negativo :(
