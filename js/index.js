@@ -1,4 +1,4 @@
-/*function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e) {
+function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e) {
   var sep = 0;
   var key = "";
   var i = (j = 0);
@@ -41,7 +41,12 @@
     objTextBox.value += SeparadorDecimal + aux.substr(len - 2, len);
   }
   return false;
-}*/
+}
+var formatter = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+  maximumFractionDigits: 2,
+});
 
 const extractUl = document.querySelector(".extract-itens");
 const extractTotal = document.querySelector(".value-total");
@@ -50,6 +55,8 @@ const inputSelect = document.querySelector(".input-select");
 const inputMercadoria = document.querySelector(".input-mercadoria");
 const inputValor = document.querySelector(".input-valor");
 const clean = document.querySelector(".clean");
+const prejuizo = document.querySelector(".prejuizo");
+const lucro = document.querySelector(".lucro");
 
 var localStorageTransactions = JSON.parse(localStorage.getItem("transactions"));
 let transactions =
@@ -58,6 +65,8 @@ let transactions =
 clean.addEventListener("click", function cleanner() {
   let confirma = confirm("Todos as transações serão removidas!");
   if (confirma == true) {
+    lucro.style.display = "none";
+    prejuizo.style.display = "none";
     transactions = [];
     alert("Transações excluídas!");
   } else {
@@ -68,7 +77,7 @@ clean.addEventListener("click", function cleanner() {
 });
 
 const addTransactionsIntoDOM = (transactions) => {
-  const operador = transactions.amount < 0 ? "-" : "+";
+  const operador = transactions.operator == "valor1" ? "-" : "+";
   const CSSClass = transactions.amount < 0 ? "minus" : "plus";
   const li = document.createElement("li");
 
@@ -76,21 +85,31 @@ const addTransactionsIntoDOM = (transactions) => {
   li.innerHTML = `
   <p class="operador">${operador}</p>
   <p class="conteudo">${transactions.name}</p>
-  <p class="valor">${transactions.amount}</p>
+  <p class="valor"> R$${transactions.amount}</p>
     `;
   extractUl.append(li);
 };
+
 function valorTotal() {
-  const transactionsAmounts = transactions.map(
-    (transaction) => transaction.amount
-  );
+  let total = 0;
+  transactions.forEach((t) => {
+    let replace = t.amount.replaceAll(".", "").replaceAll(",", ".");
+    total += replace * (t.operator == "valor1" ? -1 : 1);
+  });
 
-  const total = transactionsAmounts.reduce(
-    (accumulator, transaction) => accumulator + transaction,
-    0
-  );
-
-  extractTotal.textContent = `R$ ${total}`;
+  if (total > 0) {
+    prejuizo.style.display = "none";
+    lucro.style.display = "block";
+  }
+  if (total < 0) {
+    lucro.style.display = "none";
+    prejuizo.style.display = "block";
+  }
+  if (total == 0) {
+    lucro.style.display = "none";
+    prejuizo.style.display = "none";
+  }
+  extractTotal.textContent = `${formatter.format(total)}`;
 }
 
 function desenhaTabela() {
@@ -107,6 +126,7 @@ const updateLocalStorage = () => {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  const transactionOperator = inputSelect.value.trim();
   const transactionName = inputMercadoria.value.trim();
   const transactionAmount = inputValor.value.trim();
 
@@ -120,15 +140,14 @@ form.addEventListener("submit", (event) => {
   }
 
   const transaction = {
+    operator: transactionOperator,
     name: transactionName,
-    amount: Number(transactionAmount),
+    amount: transactionAmount,
   };
 
   transactions.push(transaction);
   desenhaTabela();
   updateLocalStorage();
-  console.log(transactions.amount);
-
   inputMercadoria.value = "";
   inputValor.value = "";
 });

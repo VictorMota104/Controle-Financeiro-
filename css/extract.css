@@ -45,6 +45,14 @@
   margin-right: 5px;
 }
 
+.main .extract .prejuizo,
+.lucro {
+  font-size: 10px;
+  text-align: right;
+  margin-top: -12px;
+  margin-right: 5px;
+}
+
 .main .extract .total {
   display: flex;
   justify-content: space-between;

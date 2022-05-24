@@ -40,6 +40,7 @@
                 <div class="transaction-itens1">
                 <p>Tipo de transação</p>
                     <select class="input-select" name="select">
+                        <option value="seleciona" selected disabled>Selecione uma transação</option>
                         <option id="valor1" value="valor1" >Compra</option>
                         <option id="valor2" value="valor2" >Venda</option>
                     </select>
@@ -57,7 +58,7 @@
                     <div class="form-control">
                         <label for="amount">
                         </label>
-                        <input class="input-valor" type="text" name="valor" id="valor" placeholder="R$ 0,00"> <!--onKeyPress="return(MascaraMoeda(this,'.',',',event))"-->
+                        <input class="input-valor" type="text" name="valor" id="valor" placeholder="R$ 0,00" onKeyPress="return(MascaraMoeda(this,'.',',',event))"> 
                     </div>
                 </div>
             </div>
@@ -75,12 +76,15 @@
                   <p>Valor</p>
               </div>
               <ul id="extract-itens" class="extract-itens">
-
+                    <p>Nenhuma transação cadastrada</p>
               </ul>
               <div class="total">
                   <p>Total</p>
-                  <p  class="value-total">R$500,00</p>
+                  <p class="value-total">R$500,00</p>
               </div>
+              
+              <div class="prejuizo">[PREJUÍZO]</div>
+              <div class="lucro">[LUCRO]</div>
           </section>
       </main>
         </div>
